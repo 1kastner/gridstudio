@@ -264,14 +264,19 @@ def _read_from_sheet(cell_range, sheet_index):
     return pd.DataFrame(data=result).transpose()
 
 
-def sheet(cell_range, data=None, include_headers=False, sheet_index=0):
+def sheet(cell_range, data=None, headers=False, sheet_index=0):
     """
     This reads from or writes to a cell range.
 
-    TODO: Note concrete examples
+    >> sheet("A1", pd.DataFrame(data=[1,2,3])
+    This displays 1, 2, and 3 in the first column (column A)
+
+    >> print(sheet("A1"))
+    This shows the value in the first row in the first column.
+
     """
     if data is not None:
-        _write_to_sheet(cell_range, data, include_headers, sheet_index)
+        _write_to_sheet(cell_range, data, headers, sheet_index)
     else:
         _read_from_sheet(cell_range, sheet_index)
 
@@ -283,9 +288,7 @@ def cell(cell, value=None):
     TODO: Note concrete examples
     """
     if value is not None:
-        # set value
-        sheet(cell, value)
+        sheet(cell, data=value)
     else:
-        # just return value
         cell_range = ':'.join([cell, cell])
         return sheet(cell_range)
